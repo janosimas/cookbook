@@ -116,7 +116,7 @@ Output
 
 or 
 
-`config | get env | pick APPDATA`
+`config | get env | select APPDATA`
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
