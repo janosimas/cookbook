@@ -86,7 +86,7 @@ Suppose you would like to check the number of lines the string "Tagged" appears 
 then sort those files by largest line count.
 
 ```
-rg -c Tagged | lines | split column ":" file line_count | str --to-int line_count | sort-by line_count | reverse
+rg -c Tagged | lines | split column ":" file line_count | str to-int line_count | sort-by line_count | reverse
 ```
 
 Output
