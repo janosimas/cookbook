@@ -58,7 +58,7 @@ Fugazi:In On The Kill Taker:1993
 
 You can parse it into a table.
 
-`open bands.txt | lines | split-column ":" Band Album Year | skip 1 | sort-by Year`
+`open bands.txt | lines | split column ":" Band Album Year | skip 1 | sort-by Year`
 
 Output 
 
@@ -86,7 +86,7 @@ Suppose you would like to check the number of lines the string "Tagged" appears 
 then sort those files by largest line count.
 
 ```
-rg -c Tagged | lines | split-column ":" file line_count | str --to-int line_count | sort-by line_count | reverse
+rg -c Tagged | lines | split column ":" file line_count | str --to-int line_count | sort-by line_count | reverse
 ```
 
 Output
