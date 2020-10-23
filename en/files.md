@@ -76,7 +76,7 @@ Output
 
 You can alternatively do this using `parse`.
 
-`open bands.txt | parse "{Band}:{Album}:{Year}" | skip 1 | sort-by Year`
+`open bands.txt | lines | parse "{Band}:{Album}:{Year}" | skip 1 | sort-by Year`
 
 ---
 
