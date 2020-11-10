@@ -253,7 +253,7 @@ Or even show me all the commits in the last 7 days.
 
 Now, with the 365 day slice of data, let's `group-by` name where the commits are less than a year old. This table has a lot of columns so it's unreadable. However, if we `group-by` name and `pivot` the table things will look much cleaner. `Pivot` takes rows and turns them into columns or turns columns into rows.
 
-  `> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot`
 
 
   ```
@@ -284,6 +284,10 @@ error: Unknown column
   │                                                                                                                            There isn't a column named 'date'
   │                                                                                                                            Perhaps you meant 'commit'? Columns available: commit, subject
   ```
+
+Here's one tip for dealing with this error. We have a `do` command that has an `--ignore_errors` parameter. This is how you'd use it in the above example, if it were giving errors.
+
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | do -i { split column "»¦«" commit subject name email date } | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot`
 
 Now, back to parsing.
 What if we throw in the `sort-by` and `reverse` commands for good measure?
