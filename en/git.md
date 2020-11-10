@@ -2,9 +2,9 @@
 layout: content
 title: Git
 prev: Files
-next: HTTP
+next: Parsing Git Log
 link_prev: /en/files.html
-link_next: /en/http.html
+link_next: /en/parsing_git_log.html
 ---
 
 Nu can help with common `Git` tasks like removing all local branches which have been merged into master.
@@ -21,7 +21,7 @@ Output
 Deleted branch post-argument-positions (was 9d34ec9).
 ```
 
-Parse formatted commit messages
+Parse formatted commit messages (more details in the parsing git log section)
 
 `git log "--pretty=format:%h(nu)%aN(nu)%s(nu)%aD" | lines | split column "(nu)" sha1 committer desc merged_at | first 10`
 
