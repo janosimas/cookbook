@@ -2,7 +2,7 @@
 layout: content
 title: Parsing
 prev: System
-next: Native Programs
+next: Parsing Git Log
 link_prev: /en/system.html
 link_next: /en/parsing_git_log.html
 ---

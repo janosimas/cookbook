@@ -374,6 +374,7 @@ Here's one last little known command. Perhaps you don't want your table numbered
 
 Created on 11/9/2020 with Nushell on Windows 10.
 Note: Any `git log` command above with `-n 100` was used because it appears commit `109 (332e12de)` breaks on Linux. So, the results in my tables, ran from Windows, will be different than the `-n 100` lines run in Linux or Mac. You should, theoretically, be able to run all commands without filtering the amount of data returned from git.
+
 | version | commit_hash                              | features                  |
 | ------- | ---------------------------------------- | ------------------------- |
 | 0.22.0  | 97f3671e2c649e9aef5a63ee4fd906bd37e6c371 | default, clipboard, trash |
