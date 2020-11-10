@@ -1,10 +1,10 @@
 ---
 layout: content
 title: Parsing Git Log
-prev: System
-next: Native Programs
-link_prev: /en/parsing.html
-link_next: /en/native_shell_programs.html
+prev: Git
+next: HTTP
+link_prev: /en/git.html
+link_next: /en/http.html
 ---
 
 # Let's parse git log
@@ -212,7 +212,7 @@ This would look better if we pivot the data and name the columns
 
 How about `where` now? Show only the records that are less than a year old.
 
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day`
 
 ```
 ╭─────┬──────────┬─────────────────────────────────────────────────────────────────────────┬──────────────────────────┬───────────────────────────────────────────────────┬───────────────╮
@@ -236,7 +236,7 @@ How about `where` now? Show only the records that are less than a year old.
   ```
 
 Or even show me all the commits in the last 7 days.
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 7day`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 7day`
 
 ```
 ╭───┬──────────┬────────────────────────────────────────────────────────────┬──────────────────┬──────────────────────────────────────────┬────────────╮
@@ -253,7 +253,7 @@ Or even show me all the commits in the last 7 days.
 
 Now, with the 365 day slice of data, let's `group-by` name where the commits are less than a year old. This table has a lot of columns so it's unreadable. However, if we `group-by` name and `pivot` the table things will look much cleaner. `Pivot` takes rows and turns them into columns or turns columns into rows.
 
-  `> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot`
+  `> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot`
 
 
   ```
@@ -272,7 +272,7 @@ Now, with the 365 day slice of data, let's `group-by` name where the commits are
 │   9 │ rjboas                   │ [table 1 rows]   │
 │  10 │ Avery Harnish            │ [table 1 rows]   │
  ```
-Side note: If you happen to get errors, pay attention to the error message. For instance, this error means that the data being returned from `git log` is somehow incomplete. Specifically, there is a missing date column. I've seen git commands work perfectly on Windows and not work at all on Linux or Mac. I'm not sure why. In fact, I had to add -100 on some of these commands because I was getting this exact error on Linux.
+Side note: If you happen to get errors, pay attention to the error message. For instance, this error means that the data being returned from `git log` is somehow incomplete. Specifically, there is a missing date column. I've seen git commands work perfectly on Windows and not work at all on Linux or Mac. I'm not sure why. If you run into this issue, one easy way to temporarily avoid it is to limit `git log` results to a certain number like `git log -n 100`.
 
 ```
 error: Unknown column
@@ -288,7 +288,7 @@ error: Unknown column
 Now, back to parsing.
 What if we throw in the `sort-by` and `reverse` commands for good measure?
 
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | reverse`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | reverse`
 
 ```
 ╭─────┬──────────────────────────┬──────────────────╮
@@ -312,7 +312,7 @@ What if we throw in the `sort-by` and `reverse` commands for good measure?
 
 This is still a lot of data so let's just look at the top 10 and use the `rename` command to name the columns. We could've also provided the column names with the pivot command.
 
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10`
 
 ```
 ╭───┬────────────────────┬──────────────────╮
@@ -332,7 +332,7 @@ This is still a lot of data so let's just look at the top 10 and use the `rename
 ```
 Let's get rid of that [table x rows] thing because it's kind of ugly and just report the `count`.
 
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10 | update commits {get commits | count }`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10 | update commits {get commits | count }`
 ```
 ╭───┬────────────────────┬─────────╮
 │ # │ name               │ commits │
@@ -353,7 +353,7 @@ And there you have it. The top 10 committers and we learned a little bit of pars
 
 Here's one last little known command. Perhaps you don't want your table numbered starting with 0. Here's a way to change that with the `table` command.
 
-`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD -n 100 | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10 | update commits {get commits | count } | table -n 1`
+`> git log --pretty=%h»¦«%s»¦«%aN»¦«%aE»¦«%aD | lines | split column "»¦«" commit subject name email date | update date { get date | str to-datetime} | where date < 365day | group-by name | pivot | sort-by Column1 | rename name commits | reverse | first 10 | update commits {get commits | count } | table -n 1`
 
 ```
 ╭────┬────────────────────┬─────────╮
@@ -373,7 +373,6 @@ Here's one last little known command. Perhaps you don't want your table numbered
 ```
 
 Created on 11/9/2020 with Nushell on Windows 10.
-Note: Any `git log` command above with `-n 100` was used because it appears commit `109 (332e12de)` breaks on Linux. So, the results in my tables, ran from Windows, will be different than the `-n 100` lines run in Linux or Mac. You should, theoretically, be able to run all commands without filtering the amount of data returned from git.
 
 | version | commit_hash                              | features                  |
 | ------- | ---------------------------------------- | ------------------------- |

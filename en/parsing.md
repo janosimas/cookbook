@@ -2,9 +2,9 @@
 layout: content
 title: Parsing
 prev: System
-next: Parsing Git Log
+next: Native Shell Programs
 link_prev: /en/system.html
-link_next: /en/parsing_git_log.html
+link_next: /en/native_shell_programs.html
 ---
 
 Nu offers the ability to do some basic parsing.
