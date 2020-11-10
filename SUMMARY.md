@@ -3,6 +3,7 @@
     * [Help](en/help.md)
     * [System](en/system.md)
     * [Parsing](en/parsing.md)
+    * [Parsing Git Log](en/parsing_git_log.md)
     * [Native Shell Programs](en/native_shell_programs.md)
     * [Files](en/files.md)
     * [Git](en/git.md)
